@@ -1,0 +1,951 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <script src="static/js/echarts.js"></script>
+    <script src="static/js/bmap.js"></script>
+    <title>CelestialUI Admin</title>
+    <!-- base:css -->
+    <link rel="stylesheet" href="static/css/typicons.css">
+    <link rel="stylesheet" href="static/css/vendor.bundle.base.css">
+    <!-- endinject --> 
+    <!-- plugin css for this page -->
+    <!-- End plugin css for this page -->
+    <!-- inject:css -->
+    <link rel="stylesheet" href="static/css/style.css">
+    <!-- endinject -->
+    <script type="text/javascript" src="http://api.map.baidu.com/api?v=3.0&ak=88MSQTSTLco412u3HKPVEnr4cgHMsywr"></script>
+    <style>
+      .image-container {
+        width: 800px;
+        height: 450px;
+        overflow: hidden;
+      }
+
+      .image-container img {
+        width: 100%;
+        height: auto;
+        object-fit: none;
+        object-position: center center;
+        clip-path: inset(0 0 0 0);
+      }
+
+    </style>
+    <style>
+      .image-container1 {
+        max-width: 60px;
+        max-height: 60px;
+      }
+  
+      .image-container1 img {
+        max-width: 100%;
+        max-height: 100%;
+      }
+    </style>
+    <style>
+      .image-container2 {
+        max-width: 200px;
+        max-height: 200px;
+      }
+  
+      .image-container2 img {
+        max-width: 100%;
+        max-height: 100%;
+      }
+    </style>
+  <style>
+    .round-image {
+      border-radius: 50%;
+      width: 36px;
+      height: 36px;
+    }
+  </style>
+  <style>
+    .round-image1 {
+      border-radius: 50%;
+      align-items: center;
+      width: 270px;
+      height: 270px;
+    }
+    .round-image1 img {
+        max-width: 100%;
+        max-height: 100%;
+      }
+  </style>
+    <script>
+    function postUserId() {
+      var form = document.createElement('form');
+      form.method = 'POST';
+      form.action = '/index';
+    
+      var userIdInput = document.createElement('input');
+      userIdInput.type = 'hidden';
+      userIdInput.name = 'userId';
+      userIdInput.value = '{{user_id}}';
+    
+      form.appendChild(userIdInput);
+      document.body.appendChild(form);
+      form.submit();
+    }
+    </script>
+    <script>
+      function postUserId2() {
+        var form = document.createElement('form');
+        form.method = 'POST';
+        form.action = '/search';
+      
+        var userIdInput = document.createElement('input');
+        userIdInput.type = 'hidden';
+        userIdInput.name = 'userId';
+        userIdInput.value = '{{user_id}}';
+      
+        form.appendChild(userIdInput);
+        document.body.appendChild(form);
+        form.submit();
+      }
+      </script>
+      <script>
+        function postUserId3() {
+          var form = document.createElement('form');
+          form.method = 'POST';
+          form.action = '/recommend';
+        
+          var userIdInput = document.createElement('input');
+          userIdInput.type = 'hidden';
+          userIdInput.name = 'userId';
+          userIdInput.value = '{{user_id}}';
+        
+          form.appendChild(userIdInput);
+          document.body.appendChild(form);
+          form.submit();
+        }
+        </script>
+        <script>
+          function postArtistAndUserId(artistId, userId) {
+            var form = document.createElement('form');
+            form.method = 'POST';
+            form.action = '/artist';
+
+            var artistIdInput = document.createElement('input');
+            artistIdInput.type = 'hidden';
+            artistIdInput.name = 'artistId';
+            artistIdInput.value = artistId;
+
+            var userIdInput = document.createElement('input');
+            userIdInput.type = 'hidden';
+            userIdInput.name = 'userId';
+            userIdInput.value = userId;
+
+            form.appendChild(artistIdInput);
+            form.appendChild(userIdInput);
+            document.body.appendChild(form);
+            form.submit();
+          }
+
+          </script>
+  </head>
+  <body>
+    <div class="row" id="proBanner">
+      <div class="col-12">
+        <span class="d-flex align-items-center purchase-popup">
+          <p>关注塔菲喵，关注塔菲谢谢喵</p>
+          <a href="https://space.bilibili.com/1265680561" target="_blank" class="btn download-button purchase-button ml-auto">点击关注（wink）</a>
+          <i class="typcn typcn-delete-outline" id="bannerClose"></i>
+        </span>
+      </div>
+    </div>
+    <div class="container-scroller">
+      <!-- partial:partials/_navbar.html -->
+      <nav class="navbar col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
+        <div class="text-center navbar-brand-wrapper d-flex align-items-center justify-content-center">
+          <a class="navbar-brand brand-logo" href=""><img src="static/picture/logo.svg" alt="logo"></a>
+          <a class="navbar-brand brand-logo-mini" href=""><img src="static/picture/logo-mini.svg" alt="logo"></a>
+          <button class="navbar-toggler navbar-toggler align-self-center d-none d-lg-flex" type="button" data-toggle="minimize">
+            <span class="typcn typcn-th-menu"></span>
+          </button>
+        </div>
+        <div class="navbar-menu-wrapper d-flex align-items-center justify-content-end">
+          
+          <ul class="navbar-nav navbar-nav-right">
+            <li class="nav-item d-none d-lg-flex  mr-2">
+              <a class="nav-link" href="/help">
+                Help
+              </a>
+            </li>
+            <li class="nav-item dropdown  d-flex">
+              <a class="nav-link count-indicator dropdown-toggle d-flex align-items-center justify-content-center" id="notificationDropdown" href="#" data-toggle="dropdown">
+                <i class="typcn typcn-bell mr-0"></i>
+                <span class="count bg-danger">2</span>
+              </a>
+              <div class="dropdown-menu dropdown-menu-right navbar-dropdown preview-list" aria-labelledby="notificationDropdown">
+                <p class="mb-0 font-weight-normal float-left dropdown-header">Notifications</p>
+                <a class="dropdown-item preview-item">
+                  <div class="sidebar-profile-image">
+                    <img src="static/picture/genshin.png" alt="image">
+                    <span class="sidebar-status-indicator"></span>
+                  </div>
+                  <div class="preview-item-content">
+                    <p class="font-weight-light small-text mb-0">
+                      Don't forget to go online today, Traveler
+                    </p>
+                  </div>
+                </a>
+                <a class="dropdown-item preview-item">
+                  <div class="sidebar-profile-image">
+                    <img src="static/picture/honkai.png" alt="image">
+                    <span class="sidebar-status-indicator"></span>
+                  </div>
+                  <div class="preview-item-content">
+                    <p class="font-weight-light small-text mb-0">
+                      Don't forget to come online today, Captain
+                    </p>
+                  </div>
+                </a>
+              </div>
+            </li>
+            <li class="nav-item nav-profile dropdown">
+              <a class="nav-link dropdown-toggle  pl-0 pr-0" href="#" data-toggle="dropdown" id="profileDropdown">
+                <i class="typcn typcn-user-outline mr-0"></i>
+                <span class="nav-profile-name">Evan Morales</span>
+              </a>
+              <div class="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="profileDropdown">
+                <a class="dropdown-item" href="/login">
+                <i class="typcn typcn-power text-primary"></i>
+                Logout
+                </a>
+              </div>
+            </li>
+          </ul>
+          <button class="navbar-toggler navbar-toggler-right d-lg-none align-self-center" type="button" data-toggle="offcanvas">
+            <span class="typcn typcn-th-menu"></span>
+          </button>
+        </div>
+      </nav>
+      <!-- partial -->
+      <div class="container-fluid page-body-wrapper">
+        <!-- partial:partials/_settings-panel.html -->
+        <div class="theme-setting-wrapper">
+          <div id="settings-trigger"><i class="typcn typcn-cog-outline"></i></div>
+          <div id="theme-settings" class="settings-panel">
+            <i class="settings-close typcn typcn-delete-outline"></i>
+            <p class="settings-heading">SIDEBAR SKINS</p>
+            <div class="sidebar-bg-options" id="sidebar-light-theme">
+              <div class="img-ss rounded-circle bg-light border mr-3"></div>
+              Light
+            </div>
+            <div class="sidebar-bg-options selected" id="sidebar-dark-theme">
+              <div class="img-ss rounded-circle bg-dark border mr-3"></div>
+              Dark
+            </div>
+            <p class="settings-heading mt-2">HEADER SKINS</p>
+            <div class="color-tiles mx-0 px-4">
+              <div class="tiles success"></div>
+              <div class="tiles warning"></div>
+              <div class="tiles danger"></div>
+              <div class="tiles primary"></div>
+              <div class="tiles info"></div>
+              <div class="tiles dark"></div>
+              <div class="tiles default border"></div>
+            </div>
+          </div>
+        </div>
+        <!-- partial -->
+        <!-- partial:partials/_sidebar.html -->
+        <nav class="sidebar sidebar-offcanvas" id="sidebar">
+        <ul class="nav">
+          <li class="nav-item">
+            <div class="d-flex sidebar-profile">
+              <div class="sidebar-profile-image">
+                <img src="static/picture/hanser.png" alt="image">
+                <span class="sidebar-status-indicator"></span>
+              </div>
+              <div class="sidebar-profile-name">
+                <p class="sidebar-name">
+                  {{ user_name }}
+                </p>
+                <p class="sidebar-designation">
+                  Welcome
+                </p>
+              </div>
+            </div>
+            <div class="nav-search">
+              <div class="input-group">
+                <input type="text" class="form-control" placeholder="No use just for fun..." aria-label="search" aria-describedby="search">
+                <div class="input-group-append">
+                  <span class="input-group-text" id="search">
+                    <i class="typcn typcn-zoom"></i>
+                  </span>
+                </div>
+              </div>
+            </div>
+            <p class="sidebar-menu-title">Dash menu</p>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/index" onclick="event.preventDefault(); postUserId()">
+              <i class="typcn typcn-device-desktop menu-icon"></i>
+              <span class="menu-title">Dashboard <span class="badge badge-primary ml-3"> Home</span></span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/search" onclick="event.preventDefault(); postUserId2()">
+              <i class="typcn typcn-compass menu-icon"></i>
+              <span class="menu-title">Search Artist </span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/recommend" onclick="event.preventDefault(); postUserId3()">
+              <i class="typcn typcn-film menu-icon"></i>
+              <span class="menu-title">Recommend To You </span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" data-toggle="collapse" href="#auth" aria-expanded="false" aria-controls="auth">
+              <i class="typcn typcn-user-add-outline menu-icon"></i>
+              <span class="menu-title">User Pages</span>
+              <i class="menu-arrow"></i>
+            </a>
+            <div class="collapse" id="auth">
+              <ul class="nav flex-column sub-menu">
+                <li class="nav-item"> <a class="nav-link" href="login"> Logout </a></li>
+                <li class="nav-item"> <a class="nav-link" href="https://music.163.com/#/search"> Search id </a></li>
+              </ul>
+            </div>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="documentation.html">
+              <i class="typcn typcn-document-text menu-icon"></i>
+              <span class="menu-title">Documentation</span>
+            </a>
+          </li>
+        </ul>
+        <ul class="sidebar-legend">
+          <li>
+            <p class="sidebar-menu-title">Recommended Games</p>
+          </li>
+          <li class="nav-item"><a href="#" class="nav-link">Honkai Impact 3rd</a></li>
+          <li class="nav-item"><a href="#" class="nav-link">Genshin Impact</a></li>
+          <li class="nav-item"><a href="#" class="nav-link">Honkai: Star Rail</a></li>
+        </ul>
+      </nav>
+        <!-- partial -->
+        <div class="main-panel">
+          <div class="content-wrapper">
+            <div class="row">
+              <div class="col-sm-6">
+                <h1 class="mb-0 font-weight-bold">Author Details:</h1>
+                <h6></h6>
+                <h3>{{artist_name}}</h3>
+              </div>
+              <div class="col-sm-6">
+                <div class="d-flex align-items-center justify-content-md-end">
+                  <div class="mb-3 mb-xl-0 pr-1">
+                      <div class="dropdown">
+                        <a class="btn bg-white btn-sm dropdown-toggle btn-icon-text border mr-2" type="button" id="dropdownMenu3" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <i class="typcn typcn-calendar-outline mr-2"></i>All Datas
+                        </a>
+                      </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row  mt-3">
+              <div class="col-xl-8 d-flex grid-margin stretch-card">
+                <div class="card">
+                  <div class="card-body">
+                    <div class="image-container">
+                      <img src={{back_url}} alt="Image">
+                    </div>
+                  </div>
+                </div>
+              </div>
+              
+              <div class="col-xl-4 d-flex grid-margin stretch-card">
+                <div class="card">
+                  <div class="card-body">
+                    <div class="d-flex flex-wrap justify-content-between">
+                      <h4 class="card-title mb-3">Basic information</h4>
+                    </div>
+                    <div class="row">
+                      <div class="col-12">
+                         <div class="row">
+                          <div class="col-6">
+                            <div class="image-container2">
+                              <img src={{artist_img}} alt="Image">
+                            </div>
+                          </div>
+                          <div class="col-6">
+                            <div class="image-container2">
+                              <img src={{wordcloud_part2}} alt="Image">
+                            </div>
+                          </div>
+                         </div>
+                      </div>
+                    </div>
+                    <div class="progress progress-md mt-4">
+                      <div class="progress-bar bg-success" role="progressbar" style="width: 35%" aria-valuenow="35" aria-valuemin="0" aria-valuemax="100"></div>
+                    </div>
+                    <h2></h2>
+                    <div class="row">
+                      <div class="col-12">
+                        <div class="row">
+                          <div class="col-sm-12">
+                            <div class="d-flex justify-content-between mb-4">
+                              <div>Artist name</div>
+                              <div class="text-muted">{{artist_name}}</div>
+                            </div>
+                            <div class="d-flex justify-content-between mb-4">
+                              <div>Basic information about the singer:</div>
+                            </div>
+                            <div class="text-muted">{{briefdesc}}</div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-xl-6 d-flex grid-margin stretch-card">
+                <div class="card">
+                  <div class="card-body">
+                    <div class="d-flex flex-wrap justify-content-between">
+                      <h4 class="card-title mb-3">Quantitative  table of Creative Directions</h4>
+                    </div>
+                    <div class="row">
+                      <div class="col-12">
+                        <div class="row">
+                          <div class="col-lg-6">
+                              <div id="Top 10 Listening Tags" style="width:300px;height:300px;" ></div>
+                              <script type="text/javascript">
+                                var chartDom = document.getElementById('Top 10 Listening Tags');
+                                var myChart = echarts.init(chartDom);
+                                var option;
+                                var jsonData = {{ artist_list_json|safe }};
+
+                                              option = {
+                                                tooltip: {
+                                                  trigger: 'item'
+                                                },
+                                                legend: {
+                                                  top: '5%',
+                                                  left: 'center',
+                                                  // doesn't perfectly work with our tricks, disable it
+                                                  selectedMode: false
+                                                },
+                                                series: [
+                                                  {
+                                                    name: 'Access From',
+                                                    type: 'pie',
+                                                    radius: ['40%', '70%'],
+                                                    center: ['50%', '70%'],
+                                                    // adjust the start angle
+                                                    startAngle: 180,
+                                                    label: {
+                                                      show: false,
+                                                      formatter(param) {
+                                                        // correct the percentage
+                                                        return param.name + ' (' + param.percent * 2 + '%)';
+                                                      }
+                                                    },
+                                                    data: jsonData
+                                                  }
+                                                ]
+                                              };
+
+                                              option && myChart.setOption(option);                                                                                             
+                              </script>
+
+                            </div>
+                            <div class="col-lg-6">
+                              <ul class="session-by-channel-legend">
+                                {% for item in artist_list_abi[:6] %}
+                                  <li>
+                                    <div>{{item.name}}</div>
+                                    <div>{{item.value}}</div>
+                                  </li>
+                                {% endfor %}
+                                  <li>
+                                    ...
+                                  </li>
+                              </ul>
+                              <div class="text-muted">Move the cursor over the image to view details</div>
+                            </div>
+
+                          </div>
+                        </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-xl-6 d-flex grid-margin stretch-card">
+                <div class="card">
+                  <div class="card-body">
+                    <div class="d-flex flex-wrap justify-content-between">
+                      <h4 class="card-title mb-3">Singer Production Label Statistics</h4>
+                    </div>
+                    <div class="row">
+                      <div class="col-12">
+                        <div id="top100_music" style="width:600px;height:300px;" ></div>
+                        <script type="text/javascript">
+                          var chartDom = document.getElementById('top100_music');
+                          var myChart = echarts.init(chartDom);
+                          var option;
+                          myChart.showLoading();
+                          var jsonData = {{ json_user_music_top100 | safe }};
+                          myChart.hideLoading();
+                              option = {
+                                tooltip: {
+                                  trigger: 'axis',
+                                  axisPointer: {
+                                    type: 'shadow',
+                                    label: {
+                                      show: true
+                                    }
+                                  }
+                                },
+                                toolbox: {
+                                  show: true,
+                                  feature: {
+                                    mark: { show: true },
+                                    dataView: { show: true, readOnly: false },
+                                    magicType: { show: true, type: ['line', 'bar'] },
+                                    restore: { show: true },
+                                    saveAsImage: { show: true }
+                                  }
+                                },
+                                calculable: true,
+                    
+                                grid: {
+                                  top: '12%',
+                                  left: '1%',
+                                  right: '10%',
+                                  containLabel: true
+                                },
+                                xAxis: [
+                                  {
+                                    type: 'category',
+                                    data: jsonData.name
+                                  }
+                                ],
+                                yAxis: [
+                                  {
+                                    type: 'value',
+                                    name: 'Tag Count',
+
+                                  }
+                                ],
+                                dataZoom: [
+                                  {
+                                    show: true,
+                                    start: 94,
+                                    end: 100
+                                  },
+                                  {
+                                    type: 'inside',
+                                    start: 94,
+                                    end: 100
+                                  },
+                                  {
+                                    show: true,
+                                    yAxisIndex: 0,
+                                    filterMode: 'empty',
+                                    width: 30,
+                                    height: '80%',
+                                    showDataShadow: false,
+                                    left: '93%'
+                                  }
+                                ],
+                                series: [
+                                  {
+                                    name: 'Budget 2011',
+                                    type: 'bar',
+                                    data: jsonData.value,
+                                    itemStyle: {
+                                      color: '#f3cf7a' // 设置柱状图的颜色为红色
+                                    }
+                                  }
+                    
+                                ]
+                              };
+                              myChart.setOption(option);
+                        </script>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              
+            </div>
+            <div class="row">
+              <div class="col-lg-4 d-flex grid-margin stretch-card">
+                <div class="card">
+                  <div class="card-body">
+                    <div class="d-flex flex-wrap justify-content-between">
+                      <h4 class="card-title mb-3">Singer Fan Gender Statistics Review</h4>
+                    </div>
+                    <div id="gender_data" style="width:350px;height:350px;" ></div>
+                              <script type="text/javascript">
+                                var chartDom = document.getElementById('gender_data');
+                                var myChart = echarts.init(chartDom);
+                                var option;
+                                option = {
+                                polar: {
+                                  radius: [30, '80%']
+                                },
+                                angleAxis: {
+                                  max: 3000,
+                                  startAngle: 75
+                                },
+                                radiusAxis: {
+                                  type: 'category',
+                                  data: {{ gender_name|tojson }}
+                                },
+                                tooltip: {},
+                                series: {
+                                  type: 'bar',
+                                  data: {{ gender_data|tojson }},
+                                  coordinateSystem: 'polar',
+                                  label: {
+                                    show: true,
+                                    position: 'middle',
+                                    formatter: '{b}: {c}'
+                                  }
+                                }
+                              };
+
+                              option && myChart.setOption(option);                                                                                              
+                              </script>
+
+                  </div>
+                </div>
+              </div>
+              <div class="col-lg-8 d-flex grid-margin stretch-card">
+                <div class="card">
+                  <div class="card-body">
+                    <div id="ditu" style="width:850px;height:400px;" ></div>
+                      <script type="text/javascript" src="https://api.map.baidu.com/api?v=3.0&ak=88MSQTSTLco412u3HKPVEnr4cgHMsywr"></script>
+                        <script type="text/javascript" >
+                            var chartDom = document.getElementById('ditu');
+                            var myChart = echarts.init(chartDom);
+                            var option;
+                            var jsonData = {{ new_loc|tojson }};
+                                var formattedData = jsonData.map(function(item) {
+                                                return {
+                                                  value: item.value,
+                                                  name: item.name
+                                                };
+                                              });
+
+                            const data = formattedData;
+                            const geoCoordMap = {{new_dict|tojson}};
+                            const convertData = function (data) {
+                              var res = [];
+                              for (var i = 0; i < data.length; i++) {
+                                var geoCoord = geoCoordMap[data[i].name];
+                                if (geoCoord) {
+                                  res.push({
+                                    name: data[i].name,
+                                    value: geoCoord.concat(data[i].value)
+                                  });
+                                }
+                              }
+                              return res;
+                            };
+                            option = {
+                              title: {
+                                text: "Singer's fans nationwide distribution heat map",
+                                subtext: 'Only followers within 5000 are counted',
+                                left: 'center'
+                              },
+                              tooltip: {
+                                trigger: 'item'
+                              },
+                              bmap: {
+                                center: [104.114129, 37.550339],
+                                zoom: 5,
+                                roam: true,
+                                mapStyle: {
+                                  styleJson: [
+                                    {
+                                      featureType: 'water',
+                                      elementType: 'all',
+                                      stylers: {
+                                        color: '#d1d1d1'
+                                      }
+                                    },
+                                    {
+                                      featureType: 'land',
+                                      elementType: 'all',
+                                      stylers: {
+                                        color: '#f3f3f3'
+                                      }
+                                    },
+                                    {
+                                      featureType: 'railway',
+                                      elementType: 'all',
+                                      stylers: {
+                                        visibility: 'off'
+                                      }
+                                    },
+                                    {
+                                      featureType: 'highway',
+                                      elementType: 'all',
+                                      stylers: {
+                                        color: '#fdfdfd'
+                                      }
+                                    },
+                                    {
+                                      featureType: 'highway',
+                                      elementType: 'labels',
+                                      stylers: {
+                                        visibility: 'off'
+                                      }
+                                    },
+                                    {
+                                      featureType: 'arterial',
+                                      elementType: 'geometry',
+                                      stylers: {
+                                        color: '#fefefe'
+                                      }
+                                    },
+                                    {
+                                      featureType: 'arterial',
+                                      elementType: 'geometry.fill',
+                                      stylers: {
+                                        color: '#fefefe'
+                                      }
+                                    },
+                                    {
+                                      featureType: 'poi',
+                                      elementType: 'all',
+                                      stylers: {
+                                        visibility: 'off'
+                                      }
+                                    },
+                                    {
+                                      featureType: 'green',
+                                      elementType: 'all',
+                                      stylers: {
+                                        visibility: 'off'
+                                      }
+                                    },
+                                    {
+                                      featureType: 'subway',
+                                      elementType: 'all',
+                                      stylers: {
+                                        visibility: 'off'
+                                      }
+                                    },
+                                    {
+                                      featureType: 'manmade',
+                                      elementType: 'all',
+                                      stylers: {
+                                        color: '#d1d1d1'
+                                      }
+                                    },
+                                    {
+                                      featureType: 'local',
+                                      elementType: 'all',
+                                      stylers: {
+                                        color: '#d1d1d1'
+                                      }
+                                    },
+                                    {
+                                      featureType: 'arterial',
+                                      elementType: 'labels',
+                                      stylers: {
+                                        visibility: 'off'
+                                      }
+                                    },
+                                    {
+                                      featureType: 'boundary',
+                                      elementType: 'all',
+                                      stylers: {
+                                        color: '#fefefe'
+                                      }
+                                    },
+                                    {
+                                      featureType: 'building',
+                                      elementType: 'all',
+                                      stylers: {
+                                        color: '#d1d1d1'
+                                      }
+                                    },
+                                    {
+                                      featureType: 'label',
+                                      elementType: 'labels.text.fill',
+                                      stylers: {
+                                        color: '#999999'
+                                      }
+                                    }
+                                  ]
+                                }
+                              },
+                              series: [
+                                {
+                                  name: 'pm2.5',
+                                  type: 'scatter',
+                                  coordinateSystem: 'bmap',
+                                  data: convertData(data),
+                                  symbolSize: function (val) {
+                                    return val[2] / 10;
+                                  },
+                                  encode: {
+                                    value: 2
+                                  },
+                                  label: {
+                                    formatter: '{b}',
+                                    position: 'right',
+                                    show: false
+                                  },
+                                  emphasis: {
+                                    label: {
+                                      show: true
+                                    }
+                                  }
+                                },
+                                {
+                                  name: 'Top 5',
+                                  type: 'effectScatter',
+                                  coordinateSystem: 'bmap',
+                                  data: convertData(
+                                    data
+                                      .sort(function (a, b) {
+                                        return b.value - a.value;
+                                      })
+                                      .slice(0, 6)
+                                  ),
+                                  symbolSize: function (val) {
+                                    return val[2] / 10;
+                                  },
+                                  encode: {
+                                    value: 2
+                                  },
+                                  showEffectOn: 'render',
+                                  rippleEffect: {
+                                    brushType: 'stroke'
+                                  },
+                                  label: {
+                                    formatter: '{b}',
+                                    position: 'right',
+                                    show: true
+                                  },
+                                  itemStyle: {
+                                    shadowBlur: 10,
+                                    shadowColor: '#333'
+                                  },
+                                  emphasis: {
+                                    scale: true
+                                  },
+                                  zlevel: 1
+                                }
+                              ]
+                            };
+
+                            option && myChart.setOption(option);
+
+                        </script>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-lg-12 d-flex grid-margin stretch-card">
+                <div class="card">
+                  <div class="card-body">
+                    <h4 class="card-title">Singer Hit Song Hot Reviews</h4>
+                    <p class="card-description">
+                      Contains the artist's hit songs with corresponding hot reviews and reviewers
+                    </p>
+                    <div class="table-responsive">
+                      <table class="table table-striped">
+                        <thead>
+                          <tr>
+                            <th>
+                              
+                            </th>
+                            <th>
+                              Song name
+                            </th>
+                            <th>
+                              Comment User
+                            </th>
+                            <th>
+                              Comment
+                            </th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {% for item in music_comment[:10] %}
+                          <tr>
+                            <td >
+                              <img src="{{item.song_url}}" alt="image" class="image-container1">
+                            </td>
+                            <td>
+                              {{item.song_name}}
+                            </td>
+                            <td>
+                              <div class="d-flex">
+                                <img class="round-image" src={{item.user_url}} alt="profile image">
+                                <div>
+                                  <div> Name</div>
+                                  <div class="font-weight-bold mt-1">{{item.name}}</div>
+                                </div>
+                              </div>
+                            </td>
+                            <td>
+                              <div>{{item.comment}} </div>
+                            </td>
+                          </tr>
+                          {% endfor %}
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+          </div>
+          <!-- content-wrapper ends -->
+          <!-- partial:partials/_footer.html -->
+          <footer class="footer">
+            <div class="d-sm-flex justify-content-center justify-content-sm-between">
+              <span class="text-center text-sm-left d-block d-sm-inline-block">Chenxu Zhang &copy; 2023.6.18 SCUT FT  <a target="_blank" href="https://space.bilibili.com/227613864?spm_id_from=333.337.0.0">商务合作</a>
+                
+              </span>
+              
+            </div>
+          </footer>
+          <!-- partial -->
+        </div>
+        <!-- main-panel ends -->
+      </div>
+      <!-- page-body-wrapper ends -->
+    </div>
+    <!-- container-scroller -->
+    <!-- base:js -->
+    <script src="static/js/vendor.bundle.base.js"></script>
+    <!-- endinject -->
+    <!-- Plugin js for this page-->
+    <!-- End plugin js for this page-->
+    <!-- inject:js -->
+    <script src="static/js/off-canvas.js"></script>
+    <script src="static/js/hoverable-collapse.js"></script>
+    <script src="static/js/template.js"></script>
+    <script src="static/js/settings.js"></script>
+    <script src="static/js/todolist.js"></script>
+    <!-- endinject -->
+    <!-- plugin js for this page -->
+    <script src="static/js/progressbar.min.js"></script>
+    <script src="static/js/Chart.min.js"></script>
+    <!-- End plugin js for this page -->
+    <!-- Custom js for this page-->
+    <script src="static/js/dashboard.js"></script>
+    <!-- End custom js for this page-->
+  </body>
+</html>
