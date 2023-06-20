@@ -1,5 +1,5 @@
 <h1 align="center">
-  <img src="https://github.com/Shixu0310/Celestial-Music/tree/master/static/picture/logo.svg"  width="200">
+  <img src="https://raw.githubusercontent.com/Shixu0310/Celestial-Music/master/static/picture/logo.svg"  width="200">
 </h1>
 
 ❗ | **本项目为python大作业所用，大一时期的个人工作，对于其他项目可能有一定的借鉴作用（事后会在板块中说明清楚）如有侵权，请联系我删除。**
@@ -8,7 +8,7 @@
 
 ## Introduction
 该项目是一个**歌曲偏好分析系统**，它可以抓取特定用户的网易云音乐数据，进行相关处理，然后在网页上将数据可视化。它还包括根据用户的喜好向他们推荐艺术家和歌单，以及分析艺术家的听众用户情况。项目中存在大量私货，~~请谨慎使用~~
-![](https://github.com/Shixu0310/Celestial-Music/tree/master/static/picture/keainie.gif)
+![](https://raw.githubusercontent.com/Shixu0310/Celestial-Music/master/static/picture/keainie.gif)
 
 ## Technology Included
 
@@ -54,19 +54,19 @@
 
   <summary>页面展示 (点击展开)</summary>
 
-  ![](https://github.com/Shixu0310/Celestial-Music/tree/master/img/gif/login.gif)
+  ![](https://raw.githubusercontent.com/Shixu0310/Celestial-Music/master/img/gif/login.gif)
 
-  ![](https://github.com/Shixu0310/Celestial-Music/tree/master/img/gif/user.gif)
+  ![](https://raw.githubusercontent.com/Shixu0310/Celestial-Music/master/img/gif/user.gif)
 
-  ![](https://github.com/Shixu0310/Celestial-Music/tree/master/img/gif/animation_user.gif)
+  ![](https://raw.githubusercontent.com/Shixu0310/Celestial-Music/master/img/gif/animation_user.gif)
 
-  ![](https://github.com/Shixu0310/Celestial-Music/tree/master/img/gif/artist.gif)
+  ![](https://raw.githubusercontent.com/Shixu0310/Celestial-Music/master/img/gif/artist.gif)
 
-  ![](https://github.com/Shixu0310/Celestial-Music/tree/master/img/gif/animation_artist.gif)
+  ![](https://raw.githubusercontent.com/Shixu0310/Celestial-Music/master/img/gif/animation_artist.gif)
 
-  ![](https://github.com/Shixu0310/Celestial-Music/tree/master/img/gif/recommend.gif)
+  ![](https://raw.githubusercontent.com/Shixu0310/Celestial-Music/master/img/gif/recommend.gif)
 
-  ![](https://github.com/Shixu0310/Celestial-Music/tree/master/img/gif/logout.gif)
+  ![](https://raw.githubusercontent.com/Shixu0310/Celestial-Music/master/img/gif/logout.gif)
 
 </details>
 
@@ -174,7 +174,7 @@ Press CTRL+C to quit
    - 如果输入错误的用户id将会跳转到**42**报错网址~~这里有彩蛋捏~~
    - 如果爬取失败，将会进入**25252**报错界面
 
-![](img\login.png)
+![](https://raw.githubusercontent.com/Shixu0310/Celestial-Music/master/img/login.png)
 
 2. **进入用户界面后，用户可以查看基本操作信息：**
     <details>
@@ -208,7 +208,7 @@ Press CTRL+C to quit
    - 点击Favourite Singers Top8下的歌手名，可以直接跳转到相应歌手界面
    - ~~关注塔菲喵~~没错这就是广告，我不是雏草姬
 
-![](https://github.com/Shixu0310/Celestial-Music/tree/master/img/user.png)
+![](https://raw.githubusercontent.com/Shixu0310/Celestial-Music/master/img/user.png)
 
 4. **Search Artist板块：**
    - 搜索板块可以基于作者的id搜索作者
@@ -216,14 +216,14 @@ Press CTRL+C to quit
      - 如果爬虫运行失败会进入**25252**报错页面，可以在终端查看爬虫运行进程
      - Favourite Singers Top8板块提供了推荐作者以供选择
 
-![](https://github.com/Shixu0310/Celestial-Music/tree/master/img/search.png)
+![](https://raw.githubusercontent.com/Shixu0310/Celestial-Music/master/img/search.png)
 
 5. **Recommend To You板块：**
    - Recommended Songs 1~4 推荐了四首当前user可能喜欢的歌曲，是基于网易云的推荐系统实现的。通过用户常听音乐的tag和相关分类搜索获得。
    - Recommended Songs 5~8 同上推荐
    - Singer Hit Song Hot Reviews 推荐了10个歌单并展示了歌单的tag
   
-![](https://github.com/Shixu0310/Celestial-Music/tree/master/img/recommend.png)
+![](https://raw.githubusercontent.com/Shixu0310/Celestial-Music/master/img/recommend.png)
 
 6. **Artist板块介绍（通过歌手搜索进入）：**
    <details>
@@ -244,7 +244,7 @@ Press CTRL+C to quit
 
     </details>
 
-![](https://github.com/Shixu0310/Celestial-Music/tree/master/img/artist.png)
+![](https://raw.githubusercontent.com/Shixu0310/Celestial-Music/master/img/artist.png)
 
 ## 参考说明与鸣谢
 
