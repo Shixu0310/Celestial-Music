@@ -1,5 +1,5 @@
 <h1 align="center">
-  <img src="https://github.com/Shixu0310/Celestial-Music/tree/master/static/picture/logo.svg" alt="JAVClub" width="200">
+  <img src="https://github.com/Shixu0310/Celestial-Music/tree/master/static/picture/logo.svg"  width="200">
 </h1>
 
 ❗ | **本项目为python大作业所用，大一时期的个人工作，对于其他项目可能有一定的借鉴作用（事后会在板块中说明清楚）如有侵权，请联系我删除。**
